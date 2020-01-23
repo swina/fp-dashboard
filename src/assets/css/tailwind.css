@@ -1,0 +1,207 @@
+/**
+ * This injects Tailwind's base styles, which is a combination of
+ * Normalize.css and some additional base styles.
+ *
+ * You can see the styles here:
+ * https://github.com/tailwindcss/tailwindcss/blob/master/css/preflight.css
+ *
+ * If using `postcss-import`, use this import instead:
+ *
+ * @import "tailwindcss/preflight";
+ */
+@tailwind base;
+
+/**
+ * This injects any component classes registered by plugins.
+ *
+ * If using `postcss-import`, use this import instead:
+ *
+ * @import "tailwindcss/components";
+ */
+@tailwind components;
+
+#app {
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+}
+
+.menu {
+  @apply text-blue-300 mr-4;
+}
+
+.menu:hover {
+  @apply text-blue-100;
+}
+
+.btn {
+  @apply py-2 px-4 rounded outline-none mr-2;
+}
+
+.btn-blue {
+  @apply btn bg-blue-500 text-blue-100 border;
+}
+
+.btn:hover {
+  @apply bg-white text-blue-500 border border-blue-500;
+}
+
+button {
+  @apply outline-none;
+}
+
+button:hover {
+  @apply bg-black text-white;
+}
+
+.fab {
+  @apply rounded-full p-2 bg-gray-300 outline-none cursor-pointer;
+}
+
+.fab:hover {
+  @apply bg-black text-white;
+}
+
+.tagged {
+  @apply rounded-lg bg-gray-300 px-2 py-1;
+}
+
+.title {
+  @apply text-2xl font-bold;
+}
+
+.col {
+  @apply flex flex-col w-full;
+}
+.row {
+  @apply flex flex-row w-full;
+}
+
+input[type="text"] {
+  @apply bg-gray-100 outline-none rounded p-2; 
+}
+
+input[type="text"]:focus {
+  @apply border border-gray-800 bg-white;
+}
+
+input[type="password"] {
+  @apply bg-gray-100 outline-none rounded p-2; 
+}
+
+input[type="password"]:focus {
+  @apply border border-gray-800 bg-white;
+}
+
+input[type="checkbox"] {
+  @apply h-8 w-8 bg-blue-400;
+}
+
+select {
+  @apply bg-gray-100 outline-none rounded p-2; 
+}
+
+.reservation {
+  min-height: 2rem;
+}
+.reservation > div {
+  font-size: .7rem;
+}
+.reservation > .vuecal__event-time {
+  display: none;
+}
+
+a , a:focus , a:link , a:visited , button:focus , button:active  {
+  @apply outline-none;
+}
+
+
+.object-cover {
+  background-size: cover!important;
+}
+
+.svg-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  color: inherit;
+  vertical-align: middle;
+  fill: none;
+  stroke: #fff;
+}
+
+input:checked + .slider {
+  background: #f39e59!important;
+}
+
+
+@media screen and (max-width: 576px){
+  .mobile {
+    @apply hidden;
+  }
+}
+.collapsable {
+  transition: .4s ease-in-out;
+  display:none;
+}
+.collapse {
+  transition: max-height 1.8s ease-out;
+  display:block;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+.collapse-enter-active , .collapse-leave-active {
+  transition: height .5s;
+}
+
+.collapse-enter , .collapse-leave-to {
+  height: 100%;
+}
+
+/**
+ * Here you would add any of your custom component classes; stuff that you'd
+ * want loaded *before* the utilities so that the utilities could still
+ * override them.
+ *
+ * Example:
+ *
+ * .btn { ... }
+ * .form-input { ... }
+ *
+ * Or if using a preprocessor or `postcss-import`:
+ *
+ * @import "components/buttons";
+ * @import "components/forms";
+ */
+
+/**
+ * This injects all of Tailwind's utility classes, generated based on your
+ * config file.
+ *
+ * If using `postcss-import`, use this import instead:
+ *
+ * @import "tailwindcss/utilities";
+ */
+@tailwind utilities;
+
+/**
+ * Here you would add any custom utilities you need that don't come out of the
+ * box with Tailwind.
+ *
+ * Example :
+ *
+ * .bg-pattern-graph-paper { ... }
+ * .skew-45 { ... }
+ *
+ * Or if using a preprocessor or `postcss-import`:
+ *
+ * @import "utilities/background-patterns";
+ * @import "utilities/skew-transforms";
+ */

@@ -1,6 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Dashboard from '../views/Dashboard.vue'
+import Shop from '@/views/Shop.vue'
+import Reservations from '@/views/Reservations.vue'
+import Settings from '@/views/Settings.vue'
+import Login from '@/views/Login.vue'
+import CurrentDate from '@/views/CurrentDate.vue'
+import Products from '@/views/Products.vue'
 
 Vue.use(VueRouter)
 
@@ -8,16 +15,44 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: Dashboard
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    path: '/shop',
+    name: 'shop',
+    component: Shop
+  },
+  {
+    path: '/prenotazioni',
+    name: 'reservations',
+    component: Reservations
+  },
+  {
+    path: '/data',
+    name: 'dateSelector',
+    component: CurrentDate
+  },
+  {
+    path: '/prodotti',
+    name: 'products',
+    component: Products
+  },
+  {
+    path: '/impostazioni',
+    name: 'settings',
+    component: Settings
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login
+  },
+
+  //{
+  //  path: '/impostazioni',
+  //  name: 'settings',
+  //  component: () => import(/* webpackChunkName: "settings" */ '../views/Settings.vue')
+  //}
 ]
 
 const router = new VueRouter({
