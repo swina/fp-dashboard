@@ -7,7 +7,7 @@ import io from 'socket.io-client'
 import myapi from './api'
 import router from '@/router'
 
-const socket = io( 'http://localhost:3030', {
+const socket = io( 'https://fp-admin-api.herokuapp.com/', {
   transports: ['websocket'],
   polling: {
     extraHeaders: {

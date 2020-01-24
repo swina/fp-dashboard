@@ -7,13 +7,14 @@
         </router-link> 
         <router-link to="/prenotazioni" class="menu" title="Prenotazioni"><i class="material-icons">query_builder</i></router-link>
         <router-link to="/shop" class="menu" title="Crea Ordine"><i class="material-icons">assignment</i></router-link>
-        <router-link to="/data" class="menu" title="Cambia data"><i class="material-icons">calendar_today</i></router-link>
+        
+        <router-link to="/ordini" class="menu" title="Ordini"><i class="material-icons">dynamic_feed</i></router-link>
         <router-link to="/prodotti" class="menu" title="Gestisci prodotti"><i class="material-icons">view_list</i></router-link>
         <router-link to="/impostazioni" class="menu" title="Impostazioni"><i class="material-icons">settings_applications</i></router-link>
       </div>
       <div class="w-1/3 text-right text-white items-center flex flex-row justify-end" v-if="$store.getters.logged">
         <span v-if="$store.getters.currentDate" class="bg-blue-700 text-blue-300 rounded p-1 cursor-pointer" @click="$router.push('data')"><span class="text-xs">Data Lavoro</span> {{$dFormat($store.getters.currentDate)}}</span> 
-        
+        <router-link to="/data" class="menu" title="Cambia data"><i class="ml-2 material-icons">calendar_today</i></router-link>
         <i class="material-icons cursor-pointer ml-2" @click="$logout()" title="Esci">lock</i>
       </div>
     </div>

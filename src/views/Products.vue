@@ -9,13 +9,13 @@
     <div class="w-full md:w-1/3 p-2">
         <div class="w-full flex flex-row items-center justify-between">
             <i class="material-icons fab" @click="nextPage(0)">keyboard_arrow_left</i>
-            <div class="text-xl font-bold">Listino</div>
+            <div class="text-xl font-bold">Listino<<p class="text-xs">Trascina il prodotto a destra per modificarlo</p></div>
             <i class="material-icons fab" @click="nextPage(1)">keyboard_arrow_right</i>
         </div>
-        <draggable :list="products" :group="{ name: 'gusti', pull: 'clone', put: false }" class="flex flex-row flex-wrap">
+        <draggable :list="products" title="" :group="{ name: 'gusti', pull: 'clone', put: false }" class="flex flex-row flex-wrap">
             <template  v-for="(product,index) in products">
                 <transition name="collapse">
-                <div v-if="index > startIndex && index < (startIndex+10)" :class="'hover:bg-gray-300 cursor-move flex ' + layout" :key="'product_' + index" :title="product.name">
+                <div v-if="index >= startIndex && index < (startIndex+10)" :class="'hover:bg-gray-300 cursor-move flex ' + layout" :key="'product_' + index" :title="product.name">
                     
                     <div class="text-left">
                         <span v-if="view==='list'">{{product.name}}</span>
@@ -99,7 +99,7 @@ export default {
         startIndex: 0,
         endIndex: 10,
         products:[],
-        slices:[null],
+        slices:[],
         liste: {
             category:[],
             gusti:[]
@@ -193,6 +193,7 @@ export default {
     },
     mounted(){
         this.products = this.$store.getters.products
+        this.slices.push(this.products[0])
         this.$store.getters.cart.items.length ? this.slices = this.$store.getters.cart.items : null
         this.liste.category =  this.$arrayGroup(this.products,'category').keys
     }

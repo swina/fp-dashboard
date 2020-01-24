@@ -1,14 +1,81 @@
 import Vue from 'vue'
 import store from '@/store'
 
+function padNumber(num,str){
+  if ( num < 10 ){
+      return str + num
+  } else {
+      return num
+  }
+}
+
+function queryDate(d){
+  let today = new Date(d);
+  let year = today.getFullYear()
+  let month = padNumber(today.getMonth()+1,'0')
+  let day = padNumber(today.getDate(),'0')
+  console.log ( year+'-'+month+'-'+day )
+  return year+'-'+month+'-'+day
+}
+
+function query_by_date ( d = null , status = 0  ){
+  let date
+  let query
+  !d ? date = queryDate( new Date() ) : date = queryDate( new Date(d)) 
+  
+    query = { 
+      query: {
+        items : {
+            $gt: 0
+        },
+        date: date,
+        status: status,
+        $limit: 200,
+        $sort : {
+            date: 1,
+            time: 1
+        }
+      }
+    }
+    return query
+  
+}
+
+
+function query_by_period ( from = null , to = null , status = 0){
+    let dateFrom, dateTo, query
+    !from ? dateFrom = queryDate( new Date() ) : dateFrom = queryDate( from )
+    let d = new Date(dateFrom)
+    d.setDate ( d.getDate() - 7 )
+    !to ? dateTo = queryDate( d ) : dateTo = queryDate( to )
+    query = { 
+      query: {
+        items : {
+            $gt: 0
+        },
+        date: {
+          $gt : dateFrom ,
+          $lt : dateTo
+        },
+        status: status,
+        $limit: 200,
+        $sort : {
+            date: 1,
+            time: 1
+        }
+      }
+    }
+  return query
+}
+
 export default {
   install: function (Vue) {
 
     Vue.prototype.$reservations = function (from=null){
       let date 
       let query
-      console.log ( 'from => ' , from )
       !from ? date = store.getters.currentDate : date = from 
+      console.log ( from )
       return new Promise((resolve,reject) => {
         if ( !from ){
           query = { 
@@ -17,6 +84,7 @@ export default {
                   $gt: 0
               },
               date: date,
+              status: 0,
               $limit: 200,
               $sort : {
                   date: 1,
@@ -33,6 +101,7 @@ export default {
               date: {
                 $gt : date 
               },
+              status: 0,
               $limit: 200,
               $sort : {
                   date: 1,
@@ -41,12 +110,32 @@ export default {
             }
           }
         }
-        console.log ( query )
         this.$api.service('reservations').find( query ).then ( response => {
-          store.commit( 'reservations' , response.data )
+          store.dispatch( 'SetReservations' , response.data )
           resolve(true)
         }).catch ( error => {
           console.log ( error )
+        })
+      })
+    }
+
+    Vue.prototype.$orders = function( d = null ){
+      store.getters.currentDate ? d = store.getters.currentDate : null
+      let query = query_by_date ( d , 1 )
+      console.log ( query )
+      this.$api.service('reservations').find ( query ).then ( response => {
+        store.dispatch('SetOrders',response.data)
+        console.log ( response.data )
+      })
+    }
+
+    Vue.prototype.$ordersByPeriod = function ( from = new Date() , to = new Date() , status = 0){
+      return new Promise((resolve, reject) => {
+        let query = query_by_period ( from , to , status )
+        console.log ( from, to , query )
+        this.$api.service('reservations').find ( query ).then ( response => {
+          store.dispatch('SetOrders',response.data)
+          resolve(true)
         })
       })
     }

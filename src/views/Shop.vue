@@ -4,10 +4,10 @@
             <span title="Lista" @click="view='list'"><i class="material-icons fab">list</i></span>
             <span title="Foto" class="ml-2" @click="view='photo'"><i class="material-icons fab">image</i></span>
         </div>    
-    <div class="w-full md:w-1/2 p-2">
+    <div class="w-full md:w-1/2 p-2 pb-4">
         <div class="w-full flex flex-row items-center justify-between">
             <i class="material-icons fab" @click="nextPage(0)">keyboard_arrow_left</i>
-            <div class="text-xl font-bold">Listino</div>
+            <div class="text-xl font-bold">Listino<p class="text-xs">Trascina il prodotto a destra per modificarlo</p></div>
             <i class="material-icons fab" @click="nextPage(1)">keyboard_arrow_right</i>
         </div>
         <draggable :list="products" :group="{ name: 'gusti', pull: 'clone', put: false }" class="flex flex-row flex-wrap">

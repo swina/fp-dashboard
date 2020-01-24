@@ -8,6 +8,7 @@ import Settings from '@/views/Settings.vue'
 import Login from '@/views/Login.vue'
 import CurrentDate from '@/views/CurrentDate.vue'
 import Products from '@/views/Products.vue'
+import Orders from '@/views/Orders.vue'
 
 Vue.use(VueRouter)
 
@@ -26,6 +27,11 @@ const routes = [
     path: '/prenotazioni',
     name: 'reservations',
     component: Reservations
+  },
+  {
+    path: '/ordini',
+    name: 'orders',
+    component: Orders
   },
   {
     path: '/data',

@@ -6,7 +6,9 @@ const reservations = {
         currentName: '',
         currentSlice:0,
         slices:[null,null,null,null,null,null,null,null],
-        reservations:null
+        reservations:null,
+        orders: null,
+        period: [ new Date() , new Date() ]
     },
     mutations: {
         currentDate(state,date){
@@ -26,7 +28,13 @@ const reservations = {
         },
         reservations(state,reservations){
             state.reservations = reservations
-        }
+        },
+        orders ( state , orders ){
+            state.orders = orders
+        },
+        period( state , period ){
+            state.period = period
+        },
     },
     actions: {
         SetCurrentDate({commit},date){
@@ -46,6 +54,12 @@ const reservations = {
         },
         SetReservations ( { commit } , reservations ){
             commit ( 'reservations' , reservations )
+        },
+        SetOrders ( { commit } , orders ){
+            commit ( 'orders' , orders )
+        },
+        SetPeriod ( { commit } , period ){
+            commit ( 'period' , period )
         }
     }
 

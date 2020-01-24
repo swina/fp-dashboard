@@ -57,7 +57,8 @@
                                 <div class="w-3/4">{{item.name}}</div>
                                 <div v-if="!parseInt(item.sale)">&euro; {{item.price}}</div>
                                 <div v-if="parseInt(item.sale)" class="text-red-500">&euro; {{item.sale}}</div>
-                                <div><i class="material-icons cursor-pointer" @click="removeItem(index,i,item)">delete</i></div>
+                                <div><i class="material-icons cursor-pointer" title="Consegnata" @click="shipItem(index,i,item)">local_shipping</i></div>
+                                <div><i class="material-icons cursor-pointer" title="Elimina" @click="removeItem(index,i,item)">delete</i></div>
                             </div>
                         </template>
                     </div>
@@ -315,7 +316,6 @@ export default {
             this.$router.push('shop')
         },
         removeItem(index,i,item){
-            console.log ( index , i )
             let r = this.reservations[index]
             let reservations = JSON.parse(r.reservations)
             reservations.splice(i,1)
@@ -334,6 +334,16 @@ export default {
             //this.reservations = reservations
             //console.log ( this.hrs[this.current].reservations[i] )
             //this.hrs[h].reservations.splice(i,1)
+        },
+        shipItem(index,i,item){
+            let res = this.reservations[index]
+            res.status = 1
+            let id = res.id
+            delete res.id
+            this.$api.service('reservations').patch(id,res).then ( patched => {
+                console.log ( 'reservation patched' )
+                this.getReservations()
+            })
         }
     }
 }
