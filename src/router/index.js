@@ -9,6 +9,7 @@ import Login from '@/views/Login.vue'
 import CurrentDate from '@/views/CurrentDate.vue'
 import Products from '@/views/Products.vue'
 import Orders from '@/views/Orders.vue'
+import Chart from '@/views/Chart.vue'
 
 Vue.use(VueRouter)
 
@@ -42,6 +43,11 @@ const routes = [
     path: '/prodotti',
     name: 'products',
     component: Products
+  },
+  {
+    path: '/analisi',
+    name: 'chart',
+    component: Chart
   },
   {
     path: '/impostazioni',

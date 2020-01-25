@@ -13,6 +13,7 @@ const getters = {
   orders: state => state.reservations.orders ,
   slices: state=> state.reservations.slices,
   months: state => state.reservations.months,
+  days: state => state.reservations.days,
   shop: state => state.shop.shop,
   closes: state => state.shop.shop.closed,
   categories: state => state.shop.categories,

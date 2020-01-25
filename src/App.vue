@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div v-if="$store.getters.logged" id="nav" class="flex flex-row items-center bg-blue-800 p-2 text-left">
-      <div class="w-2/3 flex flex-row items-center">
+      <div class="w-full md:w-1/2 flex flex-row items-center">
         <router-link to="/">
           <img alt="FamilyPizza" class="h-12 w-12 mr-4" src="https://storage.googleapis.com/ghostfood-539ae.appspot.com/images/logo.png">
         </router-link> 
@@ -10,10 +10,11 @@
         
         <router-link to="/ordini" class="menu" title="Ordini"><i class="material-icons">dynamic_feed</i></router-link>
         <router-link to="/prodotti" class="menu" title="Gestisci prodotti"><i class="material-icons">view_list</i></router-link>
+        <router-link to="/analisi" class="menu" title="Analisi"><i class="material-icons">bar_chart</i></router-link>
         <router-link to="/impostazioni" class="menu" title="Impostazioni"><i class="material-icons">settings_applications</i></router-link>
       </div>
-      <div class="w-1/3 text-right text-white items-center flex flex-row justify-end" v-if="$store.getters.logged">
-        <span v-if="$store.getters.currentDate" class="bg-blue-700 text-blue-300 rounded p-1 cursor-pointer" @click="$router.push('data')"><span class="text-xs">Data Lavoro</span> {{$dFormat($store.getters.currentDate)}}</span> 
+      <div class="w-full md:w-1/2 md:text-right text-white items-center flex flex-row justify-end" v-if="$store.getters.logged">
+        <div v-if="$store.getters.currentDate" class="w-full md:w-1/2 bg-blue-700 text-blue-300 rounded p-1 cursor-pointer" @click="$router.push('data')"><span class="text-xs">Data Lavoro</span> {{$dFormat($store.getters.currentDate)}}</div> 
         <router-link to="/data" class="menu" title="Cambia data"><i class="ml-2 material-icons">calendar_today</i></router-link>
         <i class="material-icons cursor-pointer ml-2" @click="$logout()" title="Esci">lock</i>
       </div>

@@ -29,6 +29,16 @@ export default {
       return d.split('-')[2] + ' ' + store.getters.months[parseInt(d.split('-')[1])-1] + ' ' + d.split('-')[0]
     }
 
+    Vue.prototype.$dayFormat = function ( d= new Date() ){
+      let today = new Date(d);
+      let year = today.getFullYear()
+      let month = padNumber(today.getMonth()+1,'0')
+      let day = padNumber(today.getDate(),'0')
+      let dayofweek = today.getDay()
+      return store.getters.days[dayofweek] + ' ' + day + '/' + month
+    }
+
+
     Vue.prototype.$currentDate = function(d=new Date()){
       let today = new Date(d);
       let year = today.getFullYear()

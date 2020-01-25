@@ -50,14 +50,17 @@
                         <!--{{reservation.date.split('-')[2]}}-{{reservation.date.split('-')[1]}} - -->
                         <span class="tagged text-xl">{{reservation.time}}</span>
                     </div>
+                    
                     <div class="flex-0">{{reservation.name}}</span></div>
+                    <div><i class="material-icons cursor-pointer" title="Consegnata" @click="currentReservation=index,cassa=!cassa,currentTotal=reservation.total">local_shipping</i></div>
+
                     <div class="w-3/5">
                         <template v-for="(item,i) in JSON.parse(reservation.reservations)">
                             <div :key="'line_' + index + '_' + i" class="flex flex-row flex-wrap justify-between">
                                 <div class="w-3/4">{{item.name}}</div>
                                 <div v-if="!parseInt(item.sale)">&euro; {{item.price}}</div>
                                 <div v-if="parseInt(item.sale)" class="text-red-500">&euro; {{item.sale}}</div>
-                                <div><i class="material-icons cursor-pointer" title="Consegnata" @click="shipItem(index,i,item)">local_shipping</i></div>
+                                <!--<div><i class="material-icons cursor-pointer" title="Consegnata" @click="shipItem(index,i,item)">local_shipping</i></div>-->
                                 <div><i class="material-icons cursor-pointer" title="Elimina" @click="removeItem(index,i,item)">delete</i></div>
                             </div>
                         </template>
@@ -108,6 +111,16 @@
             </div>
         </v-modal>
 
+        <v-modal :modal="cassa" @close="cassa=!cassa"  @click="cassaReservation">
+            <div slot="header" class="w-full rounded-tl rounded-tr bg-blue-700 text-white p-2">Totale da pagare</div>
+            <div slot="content" class="w-full flex flex-row text-center p-10">
+                
+                <div class="w-full">
+                    &euro; <input type="text" class="w-20 text-right text-xl" v-model="total_to_pay_int"/>.<input type="text" class="w-12 text-xl" v-model="total_to_pay_dec"/>
+                </div>
+            </div>
+        </v-modal>
+
         <!-- change current date -->
         <div v-if="view==='selectDate'" class="w-full text-center">
             <vue-cal 
@@ -151,7 +164,12 @@ export default {
     data:()=>({
         view: 'timing',     //default view
         modal: false, 
+        cassa: false,
         reservations: null,
+        currentReservation: null,
+        currentTotal: 0,
+        total_to_pay_int: 0,
+        total_to_pay_dec: '00',
         total:0,
         current: null,
         currentName: '',    //customer name
@@ -165,9 +183,15 @@ export default {
 
     },
     watch:{
+
         current(i){
             this.$store.dispatch('SetCurrentTime',this.hrs[i].time)
             this.getReservations()
+        },
+        currentTotal(v){
+            this.total_to_pay_int = parseInt(v)
+            let dec = (parseFloat(v) - parseInt(v))
+            dec < 10 ? this.total_to_pay_dec =   '0' + dec : this.total_to_pay_dex = dec
         },
         view(v){
             if ( v === 'calendar' ){
@@ -334,6 +358,18 @@ export default {
             //this.reservations = reservations
             //console.log ( this.hrs[this.current].reservations[i] )
             //this.hrs[h].reservations.splice(i,1)
+        },
+        cassaReservation(){
+            console.log ( this.currentReservation , this.total_to_pay_int + '.' + this.total_to_pay_dec )
+            let res = this.reservations[this.currentReservation]
+            res.status = 1
+            res.total_to_pay = this.total_to_pay_int + '.' + this.total_to_pay_dec
+            let id = res.id
+            delete res.id
+            this.$api.service('reservations').patch(id,res).then ( patched => {
+                console.log ( 'reservation patched' )
+                this.getReservations()
+            })
         },
         shipItem(index,i,item){
             let res = this.reservations[index]

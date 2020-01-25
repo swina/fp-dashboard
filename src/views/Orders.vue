@@ -33,6 +33,9 @@
                             
                         </div>
                     </template>
+                    <div class="border-t w-full text-right text-xl pt-2">
+                        &euro; <span class="tagged">{{parseFloat(order.total_to_pay).toFixed(2)}}</span>
+                    </div>
                 </div>
             </div>
         </template>

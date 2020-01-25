@@ -1,6 +1,7 @@
 const reservations = {
     state : {
         months: ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'],
+        days: [ 'Dom' , 'Lun' , 'Mar' , 'Mer' , 'Gio' , 'Ven' , 'Sab' ],
         currentDate: null,
         currentTime: null,
         currentName: '',

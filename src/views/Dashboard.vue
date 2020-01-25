@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="w-full border mt-10" v-if="reservations">
-            <div class="text-xl bg-gray-400">Prenotazioni/Ordini <span v-if="$store.getters.currentDate">{{$dFormat($store.getters.currentDate)}}</span></div>
+            <div class="text-xl bg-gray-400">Prenotazioni <span v-if="$store.getters.currentDate">{{$dFormat($store.getters.currentDate)}}</span></div>
             <template v-for="(reservation,index) in $store.getters.reservations">
                 <div class="flex flex-row flex-wrap justify-between border-b text-left p-2" :key="'res_' + index">
                         <div class="w-8 text-xl">

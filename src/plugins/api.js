@@ -14,7 +14,6 @@ function queryDate(d){
   let year = today.getFullYear()
   let month = padNumber(today.getMonth()+1,'0')
   let day = padNumber(today.getDate(),'0')
-  console.log ( year+'-'+month+'-'+day )
   return year+'-'+month+'-'+day
 }
 
@@ -46,7 +45,7 @@ function query_by_period ( from = null , to = null , status = 0){
     let dateFrom, dateTo, query
     !from ? dateFrom = queryDate( new Date() ) : dateFrom = queryDate( from )
     let d = new Date(dateFrom)
-    d.setDate ( d.getDate() - 7 )
+    d.setDate ( d.getDate() - 8 )
     !to ? dateTo = queryDate( d ) : dateTo = queryDate( to )
     query = { 
       query: {
@@ -54,8 +53,8 @@ function query_by_period ( from = null , to = null , status = 0){
             $gt: 0
         },
         date: {
-          $gt : dateFrom ,
-          $lt : dateTo
+          $gte : dateFrom ,
+          $lte : dateTo
         },
         status: status,
         $limit: 200,
@@ -75,7 +74,6 @@ export default {
       let date 
       let query
       !from ? date = store.getters.currentDate : date = from 
-      console.log ( from )
       return new Promise((resolve,reject) => {
         if ( !from ){
           query = { 
@@ -122,7 +120,6 @@ export default {
     Vue.prototype.$orders = function( d = null ){
       store.getters.currentDate ? d = store.getters.currentDate : null
       let query = query_by_date ( d , 1 )
-      console.log ( query )
       this.$api.service('reservations').find ( query ).then ( response => {
         store.dispatch('SetOrders',response.data)
         console.log ( response.data )
@@ -132,10 +129,9 @@ export default {
     Vue.prototype.$ordersByPeriod = function ( from = new Date() , to = new Date() , status = 0){
       return new Promise((resolve, reject) => {
         let query = query_by_period ( from , to , status )
-        console.log ( from, to , query )
         this.$api.service('reservations').find ( query ).then ( response => {
           store.dispatch('SetOrders',response.data)
-          resolve(true)
+          resolve(response)
         })
       })
     }
