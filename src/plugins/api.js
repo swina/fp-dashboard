@@ -97,7 +97,7 @@ export default {
                   $gt: 0
               },
               date: {
-                $gt : date 
+                $gte : date 
               },
               status: 0,
               $limit: 200,

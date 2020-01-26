@@ -102,6 +102,10 @@ select {
   @apply bg-gray-100 outline-none rounded p-2; 
 }
 
+.icon-box {
+  @apply bg-blue-600 h-24 w-24 border rounded flex flex-col flex-wrap m-auto items-center text-center;
+}
+
 .reservation {
   min-height: 2rem;
 }
@@ -116,6 +120,8 @@ a , a:focus , a:link , a:visited , button:focus , button:active  {
   @apply outline-none;
 }
 
+.ct-line  { stroke-width:2px!important; }
+.ct-point { stroke-width:6px!important; }
 
 .object-cover {
   background-size: cover!important;
@@ -134,6 +140,17 @@ a , a:focus , a:link , a:visited , button:focus , button:active  {
 input:checked + .slider {
   background: #f39e59!important;
 }
+
+.vuecal__cell:hover {
+  background-color: #777;
+  color:#fff;
+}
+
+.vuecal__cell.selected , .vuecal__cell.selected:hover , .vuecal__cell.current , .vuecal__cell.current:hover , .vuecal__cell.today , .vuecal__cell.today:hover {
+  background-color: #36437a!important;
+  color: #fff;
+}
+
 
 
 @media screen and (max-width: 576px){

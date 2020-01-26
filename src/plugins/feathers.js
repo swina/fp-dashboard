@@ -92,24 +92,6 @@ api.authenticate().then(user=>{
 }).catch(error=>{
   router.push('login')
   console.log ( 'not authenticated ...')
-  //api.authenticate({
-  //  email: 'admin',
-  //  password: 'password',
-  //  strategy:'local'
-  //}).then ( user=> {
-  //  store.dispatch ( 'SetUser' , user )
-  //  api.service('settings').find().then(response=>{
-  //    store.dispatch('SetSettings',response.data[0])
-  //  })
-  //  api.service('products').find({query:{type:'gusto',$sort:{name:1}}}).then(response=>{
-  //    store.dispatch('SetProducts',response.data)
-  //    console.log ( 'loaded products ...')
-  //  }).catch(error=>{
-  //    console.log ( error )
-  //  }) 
-  //}).catch ( error => {
-  //  console.log ( error )
-  //})
 })
 
 export default {

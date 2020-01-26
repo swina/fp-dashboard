@@ -29,6 +29,7 @@ export default {
         onCellClick (d) {
             this.$currentDate(d)
             this.$notify ( 'Selezionato giorno ' + this.$dFormat(this.$dateFormat(d)) )
+            this.$router.push('/')
         }
     }    
 }

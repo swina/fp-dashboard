@@ -14,9 +14,9 @@
         <router-link to="/impostazioni" class="menu" title="Impostazioni"><i class="material-icons">settings_applications</i></router-link>
       </div>
       <div class="w-full md:w-1/2 md:text-right text-white items-center flex flex-row justify-end" v-if="$store.getters.logged">
-        <div v-if="$store.getters.currentDate" class="w-full md:w-1/2 bg-blue-700 text-blue-300 rounded p-1 cursor-pointer" @click="$router.push('data')"><span class="text-xs">Data Lavoro</span> {{$dFormat($store.getters.currentDate)}}</div> 
+        <div v-if="$store.getters.currentDate" class="w-full md:w-1/2 bg-blue-700 text-blue-300 rounded p-1 cursor-pointer text-center items-center" @click="$router.push('data')"><span class="text-xs">Data Lavoro</span> {{$dFormat($store.getters.currentDate)}}</div> 
         <router-link to="/data" class="menu" title="Cambia data"><i class="ml-2 material-icons">calendar_today</i></router-link>
-        <i class="material-icons cursor-pointer ml-2" @click="$logout()" title="Esci">lock</i>
+        <i class="menu material-icons cursor-pointer ml-2" @click="$logout()" title="Esci">lock</i>
       </div>
     </div>
     <router-view/>
@@ -26,7 +26,7 @@
   </div>
 </template>
 <script>
-import Dashboard from '@/views/Dashboard.vue'
+import Dashboard from './views/Dashboard.vue'
 export default {
   name: 'App',
   components: {

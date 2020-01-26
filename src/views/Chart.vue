@@ -15,10 +15,23 @@
         </div>
 
         <div :style="style" class="w-full flex flex-col text-center m-auto py-10">
-            <div class="text-md">Venduto (pezzi)</div>
-            <div id="chart_0" serial="chart_0" class="chart_0 m-auto w-1/2 px-8"></div>
-            <div class="text-md">Venduto (&euro;)</div>
-            <div id="chart_1" serial="chart_1" class="chart_1 m-auto w-1/2 px-8"></div>
+            <div class="text-md"><span class="tagged">Venduto (pezzi)</span></div>
+            <div id="chart_0" serial="chart_0" class="chart_0 m-auto px-8"></div>
+            
+            <div class="text-md"><span class="tagged">Venduto (&euro;)</span></div>
+            <div id="chart_1" serial="chart_1" class="chart_1 m-auto  px-8"></div>
+
+            <div class="text-md"><span class="tagged">Prodotti Venduti</span></div>
+            <div id="chart_2" serial="chart_2" class="chart_2 m-auto  px-8"></div>
+
+            <div v-if="sortedProducts" class="w-3/4 m-auto border p-4">
+                <template v-for="(product,index) in sortedProducts">
+                    <div :key="'line_' + index" class="w-full border-b flex flex-row justify-start text-left">
+                        <div class="w-3/4">{{product.name}}</div>
+                        <div class="">{{product.tot}}</div>
+                    </div>
+                </template>
+            </div>
         </div>
 
         <div v-if="view==='calendar'" class="w-full flex flex-col text-center">
@@ -61,8 +74,9 @@
 </template>
 
 <script>
+import 'rockiot-ui/build/rockiot.ui.min'
+import '../plugins/rockiot.chart'
 
-import '@/plugins/rockiot.chart'
 import VueCal from 'vue-cal'
 import 'vue-cal/dist/vuecal.css'
 
@@ -81,7 +95,7 @@ export default {
             data: [],
             labels: [],
             options: {
-                width: '600px',
+                width: '900px',
                 height: '300px',
                 low: 0,
                 fullWidth: true,
@@ -98,7 +112,8 @@ export default {
                 showLine: true,
                 showPoint: true,
             }
-        }
+        },
+        sortedProducts: null
     }),
     computed:{
         style(){
@@ -135,6 +150,7 @@ export default {
                 this.serie_2.keys.push(null)
                 this.serie_2.sums.push(null)
 
+
                 this.labels = resp.data.map ( order => { return order.date.split('-')[2] })
                 
                 new Rockiotchart.Line ( '.chart_0', {
@@ -163,8 +179,34 @@ export default {
                         this.serie_2.sums
                     ]
                 },this.chartData.options)
+
+                
+                this.serie_3 = this.serializeProducts(resp.data)
+                this.sortedProducts = this.serie_3.sums.map ((summ,index)=>{
+                    return {
+                        tot: parseInt(summ) , 
+                        name: this.serie_3.keys[index] 
+                    }
+                })
+
+
+                this.sortedProducts = this.sortedProducts.sort( (a,b) => parseInt(a.tot) < parseInt(b.tot) ? 1 : -1 ) 
+                new Rockiotchart.Bar ( '.chart_2', {
+                    labels: this.sortedProducts.map(a=>{return a.name.substring(0,5)}),
+                    series: [
+                        this.sortedProducts.map(a=>{return a.tot})
+                    ]
+                },this.chartData.options)
                 this.view = 'chart'
             })
+        },
+        serializeProducts(data){
+            let products = data.map ( order => {
+                return JSON.parse(order.reservations)
+            })
+            products = products.reduce ( (a,b) => a.concat(b) , [] )
+            products = this.$arrayGroup ( products , 'name' , 'active' ) 
+            return products
         }
     }
 }

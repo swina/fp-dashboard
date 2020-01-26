@@ -10,10 +10,6 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   getters: getters,
-  /*plugins:[
-    createPersistedState( { key:'fp-vuex' , paths: ['user','shop','navigation','settings','cart']})
-  ],
-  */
   modules: {
     shop,
     cart,

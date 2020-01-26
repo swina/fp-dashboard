@@ -29,9 +29,9 @@
         </draggable>
 
     </div>
-    <div class="w-full md:w-1/2 p-2 border-l-4 border-dashed">
+    <div class="w-full md:w-1/2 p-2 h-full">
         <div class="text-xl font-bold">Ordine</div>
-        <draggable :list="slices" group="gusti" class="flex flex-row flex-wrap" @change="log">
+        <draggable :list="slices" group="gusti" class="flex flex-row flex-wrap min-h-full shadow bg-gray-300 border-4 border-black border-dashed" @change="log">
              <template v-for="(slice,index) in slices">
                 
                 <div :key="'slice_' + index" :class="'cursor-move items-center relative flex ' + layout">

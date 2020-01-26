@@ -18,7 +18,7 @@
         </div>
 
         <!-- timing view -->
-        <div class="flex flex-row flex-wrap justify-around" v-if="view==='timing'">
+        <div class="flex flex-row flex-wrap justify-around" v-if="view==='timing' && hrs">
             <template v-for="(hour,index) in hrs">
                 <div class="relative flex flex-col justify-center items-center border rounded m-1 py-4 px-12" :key="'hour_' + index">
                     <button class="bg-gray-100 p-2 rounded border border-gray-800 hover:bg-gray-500 text-xl font-bold cursor-pointer" @click="current=index,view='detail'">{{hour.time}}</button>
@@ -29,7 +29,7 @@
 
 
         <!-- calendar view -->
-        <div v-if="view==='calendar'">
+        <!--<div v-if="view==='calendar'">
             <vue-cal style="height:550px" 
                 :events="events" 
                 :disable-views="['years', 'year']"
@@ -38,9 +38,11 @@
                 :time-step="15" 
                 :hide-weekdays="[1]"></vue-cal>   
         </div>
+        -->
 
         <!-- list view -->
-        <div v-if="view==='list'" class="w-full">
+        <div v-if="view==='list' && reservations"  class="w-full">
+            
             <template v-for="(reservation,index) in reservations">
                 <div class="flex flex-row flex-wrap justify-between border-b text-left p-2" :key="'res_' + index">
                     <div class="w-8 text-xl">

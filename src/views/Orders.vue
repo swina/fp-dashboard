@@ -16,7 +16,7 @@
 
         <template v-for="(order,index) in $store.getters.orders">
             <div v-if="view==='list'" class="flex flex-row flex-wrap justify-between border-b text-left p-2" :key="'res_' + index">
-                <div class="w-full bg-gray-400 p-2 mb-1">{{order.date.split('-')[2]}} {{$store.getters.months[parseInt(order.date.split('-')[1])]}} {{order.date.split('-')[0]}}</div>
+                <div class="w-full bg-gray-400 p-2 mb-1">{{order.date.split('-')[2]}} {{$store.getters.months[parseInt(order.date.split('-')[1])-1]}} {{order.date.split('-')[0]}}</div>
                 <div class="w-8 text-xl">
                     {{order.id}}
                 </div>
