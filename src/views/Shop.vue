@@ -56,7 +56,7 @@
         <div class="w-1/3"><span class="font-bold text-xl" v-if="$store.getters.currentTime">{{$dFormat($store.getters.currentDate)}} <i class="material-icons">alarm</i> <span class="bg-white p-2 rounded">{{$store.getters.currentTime}}</span></span></div>
         <div class="w-1/3 text-2xl text-right flex flex-row items-center">
             <div class="w-1/2 p-2 bg-white text-black">&euro; {{total}}</div>
-            <button class="w-1/2 bg-red-700 text-white p-2 text-center" @click="createCart">Prenota</button>
+            <div class="w-1/2 bg-red-700 text-white p-2 text-center hover:bg-black cursor-pointer" @click="createCart">Prenota</div>
         </div>
     </div>
 </div>

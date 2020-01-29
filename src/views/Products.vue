@@ -81,7 +81,7 @@
     <div class="fixed bottom-0 left-0 w-full border-t bg-blue-300 items-center flex flex-row">
         
         <div class="w-full text-2xl text-right flex flex-row justify-end items-center">
-            <button v-if="slices[0]" class="w-1/5 bg-red-700 text-white p-2 text-center" @click="save">Salva</button>
+            <div v-if="slices[0]" class="w-1/5 bg-red-700 text-white p-2 text-center hover:bg-black cursor-pointer" @click="save">Salva</div>
         </div>
     </div>
 </div>

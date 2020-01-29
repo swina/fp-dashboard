@@ -21,7 +21,7 @@
         <div class="flex flex-row flex-wrap justify-around" v-if="view==='timing' && hrs">
             <template v-for="(hour,index) in hrs">
                 <div class="relative flex flex-col justify-center items-center border rounded m-1 py-4 px-12" :key="'hour_' + index">
-                    <button class="bg-gray-100 p-2 rounded border border-gray-800 hover:bg-gray-500 text-xl font-bold cursor-pointer" @click="current=index,view='detail'">{{hour.time}}</button>
+                    <button class="bg-gray-100 p-2 rounded border border-gray-800 hover:bg-gray-500 text-xl font-bold cursor-pointer text-black" @click="current=index,view='detail'">{{hour.time}}</button>
                     <button :class="'text-3xl font-bold w-20 h-20 mt-2 flex items-center justify-center rounded cursor-pointer ' + status(hour.items)" @click="current=index,modal=!modal">{{hour.items}}</button>
                 </div>
             </template>
@@ -144,10 +144,10 @@
             <div class="w-1/3 text-right mr-2 text-xl">Prenotazione</div>
             <div class="w-1/3 text-2xl text-right flex flex-row items-center">
                 <div class="w-1/2 p-2 bg-white text-black">&euro; {{$store.getters.cart.total}}</div>
-                <button class="w-1/2 bg-red-700 text-white p-2 text-center" @click="$router.push('/shop')">
+                <div class="w-1/2 bg-red-700 text-white p-2 text-center hover:bg-black cursor-pointer" @click="$router.push('/shop')">
                     <span v-if="$store.getters.cart.items.length">Modifica</span>
                     <span v-if="!$store.getters.cart.items.length">Crea</span>
-                </button>
+                </div>
             </div>
         </div>
 

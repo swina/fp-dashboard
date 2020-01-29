@@ -20,12 +20,7 @@
  */
 @tailwind components;
 
-#app {
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-}
+
 
 .menu {
   @apply text-blue-300 mr-4;
@@ -36,11 +31,13 @@
 }
 
 .btn {
-  @apply py-2 px-4 rounded outline-none mr-2;
+  font-family: Arial, Helvetica, sans-serif;
+  @apply py-2 px-4 rounded outline-none mr-2 text-black;
 }
 
 .btn-blue {
-  @apply btn bg-blue-500 text-blue-100 border;
+  font-family: Arial, Helvetica, sans-serif;
+  @apply btn bg-blue-500 text-blue-100 border text-white;
 }
 
 .btn:hover {
@@ -48,7 +45,8 @@
 }
 
 button {
-  @apply outline-none;
+  font-family: Arial, Helvetica, sans-serif;
+  @apply outline-none text-black;
 }
 
 button:hover {
