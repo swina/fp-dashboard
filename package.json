@@ -37,10 +37,6 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ],
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  }
+  ]
+  
 }

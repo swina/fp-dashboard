@@ -27,20 +27,10 @@
             </template>
         </div>
 
-
-        <!-- calendar view -->
-        <!--<div v-if="view==='calendar'">
-            <vue-cal style="height:550px" 
-                :events="events" 
-                :disable-views="['years', 'year']"
-                :time-from="17 * 60" 
-                :time-to="23 * 60" 
-                :time-step="15" 
-                :hide-weekdays="[1]"></vue-cal>   
-        </div>
-        -->
+        
 
         <!-- list view -->
+        <!--        
         <div v-if="view==='list' && reservations"  class="w-full">
             
             <template v-for="(reservation,index) in reservations">
@@ -49,7 +39,6 @@
                         {{reservation.id}}
                     </div>
                     <div class="w-8">
-                        <!--{{reservation.date.split('-')[2]}}-{{reservation.date.split('-')[1]}} - -->
                         <span class="tagged text-xl">{{reservation.time}}</span>
                     </div>
                     
@@ -62,7 +51,6 @@
                                 <div class="w-3/4">{{item.name}}</div>
                                 <div v-if="!parseInt(item.sale)">&euro; {{item.price}}</div>
                                 <div v-if="parseInt(item.sale)" class="text-red-500">&euro; {{item.sale}}</div>
-                                <!--<div><i class="material-icons cursor-pointer" title="Consegnata" @click="shipItem(index,i,item)">local_shipping</i></div>-->
                                 <div><i class="material-icons cursor-pointer" title="Elimina" @click="removeItem(index,i,item)">delete</i></div>
                             </div>
                         </template>
@@ -70,7 +58,7 @@
                 </div>
             </template>
         </div>
-
+        -->
         <!-- detail view -->
         <div v-if="view==='detail'" class="w-full">
             <template v-for="(reservation,index) in reservations">
@@ -97,7 +85,7 @@
         </div>
 
         <!-- input customer name and  create reservation modal -->
-        <v-modal :modal="modal" @close="modal=!modal" :ok="$store.getters.cart.items.length" @click="addReservation">
+        <v-modal :modal="modal" @close="modal=!modal" :ok="$store.getters.cart.items.items.length || $store.getters.cart.items.teglie.length" @click="addReservation">
             <div slot="header" class="p-2 bg-blue-800 text-white w-full rounded-tr rounded-tl">
                 {{$dFormat($store.getters.currentDate)}} - {{$store.getters.currentTime}}
             </div>
@@ -105,10 +93,12 @@
                 <div class="w-full" v-if="$store.getters.cart.items.length">
                     <input type="text" placeholder="nome" class="border rounded mt-2 p-2" v-model="currentName"/>
                 </div>
-                <div class="w-full" v-if="!$store.getters.cart.items.length">
-                    <input type="text" placeholder="nome" class="border rounded mt-2 p-2" v-model="currentName"/>
-                    <div class="text-sm">Non hai nessun preordine attivo al momento</div>
-                    <button class="btn btn-blue" v-if="currentName" @click="createNewReservation">CREA ADESSO</button>
+                <div class="w-full flex flex-col" v-if="!$store.getters.cart.items.length">
+                    <p class="text-left">Cliente</p>
+                    <input type="text" placeholder="nome" class="border rounded my-2 p-2" v-model="currentName"/>
+                    <div v-if="!currentName && !$store.getters.cart.items.items.length &&  !$store.getters.cart.items.teglie.length" class="text-sm">Non hai nessun preordine attivo al momento</div>
+                    <button class="btn btn-blue mb-2" v-if="currentName" @click="createNewReservation">CREA TEGLIA</button>
+                    <button class="btn btn-blue" v-if="currentName" @click="createNewReservation">ORDINE BANCO</button>
                 </div>
             </div>
         </v-modal>
@@ -208,6 +198,7 @@ export default {
             let vm = this
             this.total = 0
             this.$reservations(d).then ( res => {
+                console.log ( res )
                 vm.reservations = this.$store.getters.reservations
                 vm.reservations.forEach(res=>{
                     this.total += parseFloat(res.total)
@@ -321,8 +312,9 @@ export default {
             console.log ( 'create reservation ...')
             let res = this.hrs[this.current]
             res.items = this.$store.getters.cart.items.length
-            res.reservations = this.$store.getters.cart.items
+            res.reservations = this.$store.getters.cart
             res.name = this.currentName
+            let items = this.$store.getters.cart
             this.$api.service ( 'reservations' ).create({
                 date: res.date,
                 time: res.time,

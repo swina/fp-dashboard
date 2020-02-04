@@ -108,7 +108,9 @@ export default {
             }
           }
         }
+        console.log  ( query )
         this.$api.service('reservations').find( query ).then ( response => {
+          console.log ( 'query response => ' , response.data )
           store.dispatch( 'SetReservations' , response.data )
           resolve(true)
         }).catch ( error => {

@@ -24,7 +24,8 @@ const getters = {
   product: state => state.shop.product,
   variations: state => state.shop.variations,
   qty: state => state.shop.qty,
-  cart: state => state.cart
+  cart: state => state.cart,
+  cart_mode: state => state.cart.mode
 }
 
 export default getters

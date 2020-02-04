@@ -55,6 +55,22 @@ export default {
       return year+'-'+month+'-'+day
     }
 
+    Vue.prototype.$hourStatus = function(nr=0){
+        let max = parseInt(this.$store.getters.settings.item_per_hour)
+
+        if ( nr > max ){
+            return 'bg-red-500 text-white'
+        }
+        if ( nr > (max * .75) ){
+            return 'bg-orange-500 text-black'
+        }
+        if ( nr > 0 ){
+            return 'bg-green-500 text-black'
+        }
+        return 'bg-gray-200 text-black'
+    }
+
+
     Vue.prototype.$month = function (month=0){
       return store.getters.months[month]
     }
